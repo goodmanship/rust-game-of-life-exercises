@@ -64,8 +64,9 @@ pub fn main() {
         SIM_SOLUTION => Box::new(game_of_life_solution::GameOfLifeSolution::new(game_width, game_height)),
         SIM_BROKEN => Box::new(game_of_life::BrokenGame::new(game_width, game_height)),
         SIM_MINE => {
+            Box::new(game_of_life::Mine::new())
             //FIXME reference your implementation here for the step 1 exercise :)
-            unimplemented!("The {} simulation is not yet implemented!", SIM_MINE);
+            // unimplemented!("The {} simulation is not yet implemented!", SIM_MINE);
         }
         other => panic!(
             "Bad sim {}, expected one of {}\n{}",

@@ -17,67 +17,24 @@ pub trait GameOfLife {
     fn tick(&mut self);
 
     /// Return the current width in cells of the game.
-    fn width(&self) -> i32;
+    fn width(&self) -> u32;
 
     /// Return the current height in cells of the game.
-    fn height(&self) -> i32;
+    fn height(&self) -> u32;
 }
 
 /// A blatantly-wrong implementation of GameOfLife, to show the syntax for implementing traits.
-///
-/// You can start off your own implementation by copy-pasting this.
-pub struct BrokenGame {
+pub struct Game {
     cell_state: bool,
 }
 
-impl BrokenGame {
-    pub fn new(game_width: i32, game_height: i32) -> BrokenGame { // note `new` is just a regular function
-        assert!(game_width > 0, "game width must be greater than 0");
-        assert!(game_height > 0, "game height must be greater than 0");
-        BrokenGame { cell_state: true }
-    }
-}
-
-impl GameOfLife for BrokenGame {
-    fn is_cell_alive(&self, _x: i32, _y: i32) -> Option<bool> {
-        Some(self.cell_state)
-    }
-
-    fn toggle_cell(&mut self, _x: i32, _y: i32) { // underscores stop compiler complaining about unused variables
-        // Toggle the only cell we have
-        self.cell_state = !self.cell_state;
-    }
-
-    fn tick(&mut self) {
-        self.cell_state = !self.cell_state;
-
-        println!(
-            "Broken game tick completed - cell_state is now {}",
-            self.cell_state
-        );
-    }
-
-    fn width(&self) -> i32 {
-        49 // broken implementation always returns the same width
-    }
-
-    fn height(&self) -> i32 {
-        40 // broken implementation always returns the same height
-    }
-}
-
-/// Rio's blatantly-wrong implementation of GameOfLife
-pub struct Mine {
-    cell_state: bool,
-}
-
-impl Mine {
+impl Game {
     pub fn new() -> Self {
-        Mine { cell_state: true }
+        Game { cell_state: true }
     }
 }
 
-impl GameOfLife for Mine {
+impl GameOfLife for Game {
     fn is_cell_alive(&self, _x: i32, _y: i32) -> Option<bool> {
         Some(self.cell_state)
     }
@@ -109,7 +66,6 @@ impl GameOfLife for Mine {
 mod broken_game_test {
     use super::{BrokenGame, GameOfLife};
 
-    /// A basic test to show you how to write tests in Rust, in case you want to write your own.
     #[test]
     fn broken_game_is_definitely_broken() {
         let mut game = BrokenGame::new();
