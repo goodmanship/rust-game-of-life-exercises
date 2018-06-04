@@ -68,40 +68,49 @@ impl GameOfLife for BrokenGame {
 
 /// Rio's blatantly-wrong implementation of GameOfLife
 pub struct Mine {
-    cell_state: bool,
+    width: i32,
+    height: i32,
+    state: Vec<Vec<bool>>,
 }
 
 impl Mine {
     pub fn new() -> Self {
-        Mine { cell_state: true }
+        let mut state = Vec::new();
+        state.push(Vec::new());
+        match state.last_mut() {
+            Some(v) => v.push(false),
+            None => ()
+        }
+        Mine {
+            width: 5,
+            height: 5,
+            state: state,
+        }
     }
 }
 
 impl GameOfLife for Mine {
     fn is_cell_alive(&self, _x: i32, _y: i32) -> Option<bool> {
-        Some(self.cell_state)
+        Some(self.state[_x as usize][_y as usize])
     }
 
     fn toggle_cell(&mut self, _x: i32, _y: i32) {
         // Toggle the only cell we have
-        self.cell_state = !self.cell_state;
+        self.state[_x as usize][_y as usize] = !self.state[_x as usize][_y as usize];
     }
 
     fn tick(&mut self) {
-        self.cell_state = !self.cell_state;
-
         println!(
-            "Broken game tick completed - cell_state is now {}",
-            self.cell_state
+            "Weeee"
         );
     }
 
     fn width(&self) -> u32 {
-        49 // broken implementation always lies about the width
+        self.width as u32
     }
 
     fn height(&self) -> u32 {
-        40 // broken implementation always lies about the height
+        self.height as u32
     }
 }
 
